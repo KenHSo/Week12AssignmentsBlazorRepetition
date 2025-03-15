@@ -1,0 +1,40 @@
+﻿@page "/binding-and-state"
+@rendermode InteractiveServer
+
+<h1>One-Way and Two-Way Binding Example</h1>
+
+<br />
+
+<h3>One-Way Binding:</h3>
+<p>The one-way name is: @nameOneWay</p>
+
+<br />
+
+<h3>Two-Way Binding:</h3>
+<p>The two-way name is: @nameTwoWay</p>
+<input @bind="nameTwoWay" @bind:event="oninput" placeholder="Type to change the name" />
+
+<br /><br /><br />
+
+<h3>Two-Way Binding with event:</h3>
+<p>The two-way name is: @nameTwoWayWithEvent</p>
+<input @bind="nameTwoWayWithEvent" @oninput="HandleInputEvent" placeholder="Type to change the name" />
+
+
+@code {
+    // One-way binding: This is fixed and does not change in the UI.
+    private string nameOneWay = "Kenneth";
+
+    // Two-way binding: Updates dynamically as the user types.
+    private string nameTwoWay = "Haagen";
+
+    // Two-way binding with event: Updates dynamically as the user types and triggers an event.
+    private string nameTwoWayWithEvent = "Sørensen";
+
+    private void HandleInputEvent(ChangeEventArgs e)
+    {
+        // Update the nameTwoWayWithEvent property when the input event is triggered.
+        nameTwoWayWithEvent = e.Value?.ToString() ?? string.Empty;
+    }
+
+}

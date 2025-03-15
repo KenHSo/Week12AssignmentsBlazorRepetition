@@ -1,0 +1,30 @@
+﻿@page "/ItemList"
+@rendermode InteractiveServer
+
+<h3>ItemList</h3>
+
+<input @bind="NewItem" placeholder="Add new item" />
+<button @onclick="AddNewItem">Add</button>
+
+<ul>
+	@foreach (var item in items)
+	{
+		<li>@item</li>
+	}
+</ul>
+
+@code {
+
+	private List<string> items = new List<string>();
+	private string NewItem = "";
+
+	private void AddNewItem()
+	{
+		if (!string.IsNullOrEmpty(NewItem))
+		{
+			items.Add(NewItem);
+			NewItem = "";		
+		}	
+	}
+
+}

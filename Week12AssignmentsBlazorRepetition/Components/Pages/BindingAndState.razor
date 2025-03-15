@@ -20,6 +20,10 @@
 <p>The two-way name is: @nameTwoWayWithEvent</p>
 <input @bind="nameTwoWayWithEvent" @oninput="HandleInputEvent" placeholder="Type to change the name" />
 
+<br /><br /><br />
+
+<BindingAndStateCounter/> @* Counter med statemanagement *@
+
 
 @code {
     // One-way binding: This is fixed and does not change in the UI.
@@ -31,10 +35,10 @@
     // Two-way binding with event: Updates dynamically as the user types and triggers an event.
     private string nameTwoWayWithEvent = "Sørensen";
 
+
     private void HandleInputEvent(ChangeEventArgs e)
     {
         // Update the nameTwoWayWithEvent property when the input event is triggered.
         nameTwoWayWithEvent = e.Value?.ToString() ?? string.Empty;
     }
-
 }

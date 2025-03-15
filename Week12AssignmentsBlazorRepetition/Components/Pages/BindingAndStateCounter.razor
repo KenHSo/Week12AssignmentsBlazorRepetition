@@ -1,0 +1,16 @@
+﻿
+@* Inject AppState fra Services *@
+@inject AppState appState 
+
+
+<h1>State Management</h1>
+<p>It counts on the AppState.Counter (Singleton), so it "remembers" the count when changing pages</p>
+<p>Counter: @appState.Counter</p>
+<button @onclick="IncrementCounter">Increment</button>
+
+@code {
+    private void IncrementCounter()
+    {
+        appState.Counter++;
+    }
+}

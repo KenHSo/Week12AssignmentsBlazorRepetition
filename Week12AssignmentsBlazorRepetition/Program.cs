@@ -1,3 +1,4 @@
+using Week12AssignmentsBlazorRepetition;
 using Week12AssignmentsBlazorRepetition.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Registrer AppState som en Singleton - Dvs. at der kun findes én (som deles) og at der ikke kan laves nye instanser af den.
+builder.Services.AddSingleton<AppState>();
+
 
 var app = builder.Build();
 

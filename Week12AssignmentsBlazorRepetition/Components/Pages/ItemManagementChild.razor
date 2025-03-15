@@ -1,0 +1,23 @@
+﻿<h3>Child Component</h3>
+
+<input @bind="newItem" placeholder="Enter a new item" />
+<button @onclick="NotifyParent">Add Item</button>
+
+@code {
+    [Parameter] 
+    public List<string> Items { get; set; } = new List<string>();
+
+    [Parameter] 
+    public EventCallback<string> OnItemAdded { get; set; }
+
+    private string newItem = string.Empty;
+
+    private async Task NotifyParent()
+    {
+        if (!string.IsNullOrWhiteSpace(newItem) && OnItemAdded.HasDelegate)
+        {
+            await OnItemAdded.InvokeAsync(newItem);
+            newItem = string.Empty;
+        }
+    }
+}

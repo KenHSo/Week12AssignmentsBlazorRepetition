@@ -1,9 +1,10 @@
 ﻿@page "/ItemList"
 @rendermode InteractiveServer
 
+<h1>En Simpel komponent</h1>
 <h3>ItemList</h3>
 
-<input @bind="NewItem" placeholder="Add new item" />
+<input @bind="newItem" placeholder="Add new item" />
 <button @onclick="AddNewItem">Add</button>
 
 <ul>
@@ -13,18 +14,21 @@
 	}
 </ul>
 
+<ItemManagementParent /> @* parent + child component *@
+
 @code {
 
-	private List<string> items = new List<string>();
-	private string NewItem = "";
+	private List<string> items = new List<string> { "Item 1", "Item 2", "Item 3" };
+	private string newItem = string.Empty;
 
 	private void AddNewItem()
 	{
-		if (!string.IsNullOrEmpty(NewItem))
+		if (!string.IsNullOrEmpty(newItem))
 		{
-			items.Add(NewItem);
-			NewItem = "";		
+			items.Add(newItem);
+			newItem = string.Empty;		
 		}	
 	}
 
 }
+

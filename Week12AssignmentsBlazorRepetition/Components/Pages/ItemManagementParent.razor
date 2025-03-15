@@ -1,0 +1,22 @@
+﻿
+<h1>Komponent med Parameteroverførsel og EventCallBack</h1>
+<h3>Parent Component</h3>
+
+<p>Items managed by parent:</p>
+<ul>
+    @foreach (var item in Items)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+<ItemManagementChild Items="Items" OnItemAdded="HandleItemAdded" />
+
+@code {
+    public List<string> Items { get; set; } = new List<string> { "Item 1", "Item 2", "Item 3" };
+
+    private void HandleItemAdded(string newItem)
+    {
+        Items.Add(newItem);
+    }
+}

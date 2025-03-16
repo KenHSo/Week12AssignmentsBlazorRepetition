@@ -9,7 +9,7 @@ namespace Week12AssignmentsBlazorRepetition
         public string Name { get; set; }
 
         [Range(0, 120, ErrorMessage = "Age must be between 0 and 120")]
-        public int Age { get; set; };
+        public int Age { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]

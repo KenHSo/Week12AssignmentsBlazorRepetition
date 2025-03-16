@@ -10,6 +10,11 @@ builder.Services.AddRazorComponents()
 // Registrer AppState som en Singleton - Dvs. at der kun findes én (som deles) og at der ikke kan laves nye instanser af den.
 builder.Services.AddSingleton<AppState>();
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
 
 var app = builder.Build();
 

@@ -1,0 +1,14 @@
+﻿.form-group {
+    display: flex;
+    align-items: center; /* Aligns labels and inputs vertically */
+    margin-bottom: 10px; /* Adds space between rows */
+}
+
+    .form-group label {
+        width: 100px; /* Set a fixed width for labels to align them */
+        margin-right: 10px; /* Adds space between label and input */
+    }
+
+    .form-group input {
+        flex: 1; /* Ensures input fields expand if needed */
+    }

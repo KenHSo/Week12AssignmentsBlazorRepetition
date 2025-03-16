@@ -1,0 +1,105 @@
+﻿@page "/forms-and-validation"
+@using System.ComponentModel.DataAnnotations
+@rendermode InteractiveServer
+
+<h1>Forms and Validation</h1>
+
+<br />
+
+<h3>Please provide us with your information</h3>
+
+<EditForm Model="person" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit" FormName="ThisIsAnEditForm">
+	<DataAnnotationsValidator />
+
+	<div class="form-group">
+		<label for="name">Name:</label>
+		<InputText id="name" @bind-Value="person.Name" /> &nbsp;&nbsp;
+		<ValidationMessage For="@(() => person.Name)" />
+	</div>
+
+	<div class="form-group">
+		<label for="age">Age:</label>
+		<InputNumber id="age" @bind-Value="person.Age" />
+		<ValidationMessage For="@(() => person.Age)" />
+	</div>
+
+	<div class="form-group">
+		<label for="email">Email:</label>
+		<InputText id="email" @bind-Value="person.Email" /> &nbsp;&nbsp;
+		<ValidationMessage For="@(() => person.Email)" />
+	</div>
+
+	<button type="submit">Submit</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(submissionMessage))
+{
+	<div style="color: green; margin-top: 10px;">@submissionMessage</div>
+}
+@if (showErrorMessage)
+{
+	<div style="color: red; margin-top: 10px;">Please fill in the required fields</div>
+}
+
+@code {
+
+	private Person person = new();
+
+	private string submissionMessage = string.Empty;	
+	private bool formSubmitted = false; 
+	private bool showErrorMessage = false; 
+
+
+	private void HandleValidSubmit()
+	{
+		Console.WriteLine($"Submitting: Name={person.Name}, Age={person.Age}, Email={person.Email}");
+
+		submissionMessage = "Form submitted successfully!";
+
+		formSubmitted = false; // Reset for future submissions
+		showErrorMessage = false; // Hide error message
+		person = new Person(); // Reset the form
+	}
+
+	private void HandleInvalidSubmit()
+	{
+		Console.WriteLine("Validation failed.");
+		formSubmitted = true; 
+		showErrorMessage = true; 
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr />
+<h6>Privacy Policy: </h6>
+<h6>We probably won't sell your data</h6>

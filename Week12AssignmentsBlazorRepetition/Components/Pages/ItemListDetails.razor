@@ -1,0 +1,36 @@
+﻿@page "/itemdetails/{id:int}"  
+@using Microsoft.EntityFrameworkCore
+@inject ItemDb DbContext
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<h1>Routing og Navigation</h1>
+<h3>Item Details</h3>
+
+@if (currentItem != null)
+{
+	<p>Viewing details for: @currentItem.Name (ID: @currentItem.Id)</p>
+}
+else
+{
+	<p>Item not found.</p>
+}
+
+<button @onclick="() => NavigateToItemList()">Back</button>
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+
+	private Item? currentItem;
+
+	protected override async Task OnParametersSetAsync()
+	{
+		currentItem = await DbContext.Items.FindAsync(Id);
+	}
+
+	private void NavigateToItemList()
+	{
+		Navigation.NavigateTo("/ItemList");
+	}
+}

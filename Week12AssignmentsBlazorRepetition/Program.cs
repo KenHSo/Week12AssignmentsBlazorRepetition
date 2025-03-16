@@ -1,5 +1,6 @@
 using Week12AssignmentsBlazorRepetition;
 using Week12AssignmentsBlazorRepetition.Components;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,13 +11,20 @@ builder.Services.AddRazorComponents()
 // Registrer AppState som en Singleton - Dvs. at der kun findes én (som deles) og at der ikke kan laves nye instanser af den.
 builder.Services.AddSingleton<AppState>();
 
-builder.Services.AddAntiforgery(options =>
+builder.Services.AddDbContext<ItemDb>(options =>
 {
-    options.Cookie.SameSite = SameSiteMode.None;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.UseInMemoryDatabase("ItemDb");
 });
 
 var app = builder.Build();
+
+// Ensure database is created and seeded
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ItemDb>();
+    dbContext.Database.EnsureCreated(); // Ensures DB is created and applies seed data
+    Console.WriteLine("Database initialized and seeded.");
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

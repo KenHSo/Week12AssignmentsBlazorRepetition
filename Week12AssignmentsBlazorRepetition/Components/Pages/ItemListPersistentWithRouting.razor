@@ -1,0 +1,54 @@
+﻿@using Microsoft.EntityFrameworkCore
+@inject ItemDb DbContext
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<h1>Routing and Navigation </h1>
+<h3>Persistent ItemList for testing Routing and Navigation</h3>
+
+<input @bind="newItemName" placeholder="Add new database item" />
+<button @onclick="AddItemToDb">Add</button>
+
+<ul>
+	@foreach (var item in items)
+	{
+		<li>
+			@item.Name
+			<a href="/itemdetails/@item.Id">Se detaljer (Link)</a>                                @* Link *@
+			<button @onclick="() => NavigateToDetails(item.Id)">Se detaljer (Knap)</button>       @* Programmatisk *@
+		</li>
+	}
+</ul>
+
+
+@code {
+
+	private List<Item> items = new List<Item>();
+	private string newItemName = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		// Load items from the database
+		items = await DbContext.Items.ToListAsync();
+	}
+
+	private async Task AddItemToDb()
+	{
+		if (!string.IsNullOrWhiteSpace(newItemName))
+		{
+			var newItem = new Item { Name = newItemName };
+			DbContext.Items.Add(newItem);
+			await DbContext.SaveChangesAsync();
+			newItemName = string.Empty;
+
+			// Reload the items
+			items = await DbContext.Items.ToListAsync();
+		}
+	}
+
+	private void NavigateToDetails(int id)
+	{
+		Navigation.NavigateTo($"/itemdetails/{id}");
+	}
+
+}
